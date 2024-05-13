@@ -10,7 +10,8 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { Todo } from '../../shared/interfaces/todo.interface';
+import { CreateTodo, Todo } from '../../shared/interfaces/todo.interface';
+import { TodoService } from '../../shared/data-access/data.service';
 
 @Component({
   standalone: true,
@@ -55,6 +56,16 @@ import { Todo } from '../../shared/interfaces/todo.interface';
         icon="pi pi-check"
         iconPos="right"
       />
+
+      <p-button
+        (onClick)="todoService.deleteTodo()"
+        [style]="{'margin-left': '10px'}"
+        type="button"
+        label="Clear all"
+        icon="pi pi-times-circle"
+        iconPos="right"
+        severity="danger"
+      />
     </form>
   `,
   imports: [
@@ -68,12 +79,12 @@ import { Todo } from '../../shared/interfaces/todo.interface';
   ],
 })
 export class TodoFormComponent {
-  @Output() todoSubmitted = new EventEmitter<Todo>();
+  @Output() todoSubmitted = new EventEmitter<CreateTodo>();
   private fb = inject(FormBuilder);
+  public todoService = inject(TodoService);
 
   todoForm = this.fb.nonNullable.group({
     title: ['', Validators.required],
     description: [''],
   });
-
 }

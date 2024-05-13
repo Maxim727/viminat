@@ -3,5 +3,8 @@
 <div class="layout card">
   <p>Home</p>
 
-  <app-todo-form (todoSubmitted)="createTodo($event)"/>
+  <app-todo-form (todoSubmitted)="todoService.addTodo($event)"/>
+
+  <app-todo-list [todos]="todoService.todos()"/>
+
 </div>
